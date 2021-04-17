@@ -10,47 +10,57 @@
 #include <stdlib.h>
 #include <string.h>
 #include "File.h"
+//#include "interaction.h"
 
 
 int main(){
     
     
-//    char a[100];
-//    char b[100];
-//    char c[20];
-//    char d[20];
-//    long a1,b2,c3;
-//    char str[500];
-//
-//
-//
-//    printf("%s\n%ld\n%ld\n%ld\n",a,a1,b2,c3);
-//
-//
-//    FILE * fp;
-//    //fp = fopen("/Users/lee/Desktop/book.txt", "r");
-//    fp = fopen("/Users/lee/Desktop/Final_Map(1).map", "r");
-//    while( fgets (str, 500, fp)!=NULL ) {
-//
-//          //puts(str);
-//        if (strstr(str, "link")) {
-//            sscanf(str,"%*[^=]=%ld %*[^=]=%ld %*[^=]=%ld",&a1,&b2,&c3);
-//            if (b2 == 55424440 || c3 == 55424440) {
-//                printf("h\n");
-//            }
-//        }
-//        //printf("%s",str);
-//       }
-//       fclose(fp);
+ 
     Graph * G = (Graph*)malloc(sizeof(Graph));
-    //printf("KLKLKKLKL");
     G = File_read_vex("/Users/lee/Desktop/Final_Map(1).map", G);
-
-    for (int i =0; i < G->vex; i++) {
-        printf("%ld\t",G->VexArray[i].node);
-        
-            printf("%lf\n\n",G->VexArray[i].next->length);
-        
+    
+    int pre[G->vex];
+    double dis[G->vex];
+    long node1,node2;
+    int start = 30000,end = 30000;
+    
+    printf("Enter the first node:\n");
+    scanf("%ld",&node1);
+    printf("Enter the second node:\n");
+    scanf("%ld",&node2);
+    
+    for (int i = 0; i< G->vex; i++) {
+        if (node1 == G->VexArray[i].node) {
+            start = i;
+        }
     }
     
+    for (int i = 0; i< G->vex; i++) {
+        if (node2 == G->VexArray[i].node) {
+            end = i;
+        }
+    }
+    
+    if (start != 30000 && end != 30000) {
+        shortest_path(G, start, end, pre, dis);
+    }else if(start == 30000){
+        printf("No such node for %ld!\n",node1);
+    }else{
+        printf("No such node for %ld!\n",node2);
+    }
+    //printf("%lf",get_length(G, 2, 4));
+    
+//    Edge * e = G->VexArray[2].next;
+//    while (e) {
+//        printf("%lf\t",e->length);
+//        printf("%ld\n",e->pre_node);
+//        e = e->next;
+//    }
+    
+    printf("END");
+    
+    
+
+   
 }

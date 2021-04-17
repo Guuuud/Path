@@ -24,6 +24,7 @@ typedef struct Edge{
 typedef struct Vex{
     
     long node;
+    int idt;//easy for find
     double latitude,longitude;
     Edge * next;
     
@@ -35,5 +36,11 @@ typedef struct Graph{
     Vex VexArray[3941];
     
 }Graph;
- 
+
+double get_length(Graph * G, int start, int end);
+
+void shortest_path(Graph * G, int start, int end, int pre[], double dis[]);
+
+
+
 #endif /* __ADJ_LIST_H__*/

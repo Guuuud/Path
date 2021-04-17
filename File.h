@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include "Adj_List.h"
+#include "interaction.h"
 #endif /* File_h */
 
 

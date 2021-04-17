@@ -10,6 +10,7 @@
 #include "stdio.h"
 #include <stdlib.h>
 #include "Adj_List.h"
+#include "interaction.h"
 //Variables Used for edges
 int id;
 long pre_node,next_node;
@@ -38,6 +39,7 @@ Graph * File_read_vex(char * filename,Graph * G){
             G->VexArray[i].node = Vex_id;
             G->VexArray[i].latitude = lat;
             G->VexArray[i].longitude = lon;
+            G->VexArray[i].idt = i;
             //Compute the number of the vex and let i++
             G->vex++;
             G->VexArray[i].next = NULL;
@@ -53,71 +55,46 @@ Graph * File_read_edge(char * filename,Graph * G){
     
     char str[300];
     FILE * fp = fopen(filename, "r");
-    int i = 0;
+    //int i = 0;
     while( fgets (str, 300, fp)!=NULL ) {
         if (strstr(str, "link")) {
             sscanf(str, "%*[^=]=%d %*[^=]=%ld %*[^=]=%ld %*[^=]=%d %*[^=]=%lf",&id,&pre_node,&next_node,&way,&length);//5个要读入的
+        
+            
             //id=-2143392630 node=454231775 node=1968799687 way=-7722 length=48.254007
-                Edge * edge = (Edge*)malloc(sizeof(Edge));
-                edge->id = id;
-                edge->pre_node = next_node;
-                //edge->next_node = next_node;
-                //edge->way = way;
-                edge->length = length;
-                
-                for (int i = 0; i < G ->vex; i++) {
-                    if (G->VexArray[i].node == pre_node) {
-                        edge -> next = G->VexArray[i].next;
-                        G->VexArray[i].next = edge;
-                        break;
-                    }
-                    
+            Edge * edge = (Edge*)malloc(sizeof(Edge));
+            edge->id = id;
+            edge->pre_node = next_node;
+            //edge->next_node = next_node;
+            //edge->way = way;
+            edge -> next = NULL;
+            edge->length = length;
+            
+            for (int i = 0; i < G ->vex; i++) {
+                if (G->VexArray[i].node == pre_node) {
+                    edge -> next = G->VexArray[i].next;
+                    G->VexArray[i].next = edge;
+                    break;
                 }
-            free(edge);
-            //free(edge);
-                edge = (Edge*)malloc(sizeof(Edge));
-                //edge->id = id;
-                edge->pre_node = pre_node;
-                //edge->next_node = next_node;
-                //edge->way = way;
-                edge->length = length;
-                for (int i = 0; i < G -> vex; i++) {
-                    if (G->VexArray[i].node == next_node) {
-                        edge -> next = G->VexArray[i].next;
-                        G->VexArray[i].next = edge;
-                        break;
-                 }
+            }
+            edge = (Edge*)malloc(sizeof(Edge));
+            edge->id = id;
+            edge->pre_node = pre_node;
+            //edge->next_node = next_node;
+            //edge->way = way;
+            edge->length = length;
+            edge -> next = NULL;
+            for (int i = 0; i < G -> vex; i++) {
+                if (G->VexArray[i].node == next_node) {
+                    edge -> next = G->VexArray[i].next;
+                    G->VexArray[i].next = edge;
+                    break;
                 }
-            free(edge);
-         }
-    
-       }
-    //printf("%d",i);
+            }
+            
+        }
+        
+    }
     return G;
 }
 
-Edge * create_head(long node,int length,Vex * vex){
-    //create
-    Edge * edge = (Edge*)malloc(sizeof(Edge));
-    edge ->pre_node = node;
-    edge -> length = length;
-    edge -> next = NULL;
-    
-    //add
-    vex -> next = edge;
-    return edge;
-}
-
-Edge * create_edge(long node,int length,Edge * head){
-    
-    //create
-    Edge * edge = (Edge*)malloc(sizeof(Edge));
-    edge ->pre_node = node;
-    edge -> length = length;
-    edge -> next = NULL;
-    
-    //add
-    edge -> next = head -> next;
-    head -> next = edge;
-    return edge;
-}
