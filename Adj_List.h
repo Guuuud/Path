@@ -16,6 +16,7 @@ typedef struct Edge{
     long pre_node;
     struct Edge * next;
     double length;
+    //double lat,lot;//store the coordinate of the corresponding node
     /*这两个与图的查找以及求长度无关*/
     int way;
     int id;

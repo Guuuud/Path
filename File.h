@@ -15,12 +15,14 @@
 
 
 Graph * File_read_vex(char * filename,Graph * G);
-
 Graph * File_read_edge(char * filename,Graph * G);
 
 
 
 
 Edge * create_edge(long node,int length,Edge * edge);
-
 Edge * create_head(long node,int length,Vex * vex);
+
+
+void Gnu_lines(char * filename,Graph * G);
+void convert_to_dots(char * filename,Graph * G);

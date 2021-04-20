@@ -98,3 +98,42 @@ Graph * File_read_edge(char * filename,Graph * G){
     return G;
 }
 
+//this function is only for test
+void Gnu_lines(char * filename,Graph * G){
+    
+    FILE * fp = fopen(filename, "w");
+    for (int i = 0; i < G->vex; i++) {
+        Edge * edge = (Edge*)malloc(sizeof(Edge));
+        fprintf(fp, "%ld ",G->VexArray[i].node);
+        edge = G->VexArray[i].next;
+        while (edge) {
+            fprintf(fp, "%ld ",edge->pre_node);
+            edge = edge->next;
+        }
+        fprintf(fp, "\n");
+    }
+}
+
+void convert_to_dots(char * filename,Graph * G){
+    
+    FILE * fp = fopen(filename, "w");
+    for (int i = 0; i < G->vex; i++) {
+        Edge * edge = (Edge*)malloc(sizeof(Edge));
+        //fprintf(fp, "%ld  ",G->VexArray[i].node);
+        if (G->VexArray[i].next != NULL) {
+            fprintf(fp, "%lf %lf\n",G->VexArray[i].longitude,G->VexArray[i].latitude);
+        }
+        edge = G->VexArray[i].next;
+        while (edge) {
+            //fprintf(fp, "%ld ",edge->pre_node);
+            for (int i = 0; i < G->vex; i++) {
+                if (edge->pre_node == G->VexArray[i].node) {
+                    //fprintf(fp, "%ld  ",edge->pre_node);
+                    fprintf(fp, "%lf %lf\n",G->VexArray[i].longitude,G->VexArray[i].latitude);
+                }
+            }
+            edge = edge->next;
+        }
+        fprintf(fp, "\n");
+    }
+}
