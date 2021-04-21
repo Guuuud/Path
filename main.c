@@ -51,17 +51,9 @@ int main(){
 //    }
 //
 //    printf("END");
-    Gnu_lines("/Users/lee/Desktop/circle.txt", G);
-    convert_to_dots("/Users/lee/Desktop/lines的副本.txt", G);
+    //Gnu_lines("/Users/lee/Desktop/circle.txt", G);
+    convert_to_dots("/Users/lee/Desktop/lines.txt", G);
     
-    Edge * edge = (Edge*)malloc(sizeof(Edge));
-    edge = G->VexArray[0].next;
-    printf("%ld",G->VexArray[0].node);
-    while (edge) {
-        printf("\n%ld",edge->pre_node);
-        edge = edge -> next;
-        
-    }
 
    
 }

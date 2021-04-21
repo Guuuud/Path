@@ -12,7 +12,6 @@
 
 typedef struct Edge{
     
-    
     long pre_node;
     struct Edge * next;
     double length;
