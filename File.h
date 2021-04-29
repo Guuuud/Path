@@ -12,7 +12,7 @@
 #include "Adj_List.h"
 #include "interaction.h"
 #endif /* File_h */
-
+extern int enterr;
 
 Graph * File_read_vex(char * filename,Graph * G);
 Graph * File_read_edge(char * filename,Graph * G);

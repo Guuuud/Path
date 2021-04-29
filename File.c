@@ -22,7 +22,7 @@ int way1,way2;
 double lat,lon;
 long Vex_id;
 
-
+extern int enterr;
 
 
 
@@ -30,6 +30,11 @@ Graph * File_read_vex(char * filename,Graph * G){
     
     char str[300];
     FILE * fp = fopen(filename, "r");
+    if (fp == NULL) {
+        printf("Sorry, no file existed for reading vex!\n");
+        //enterr = 10;
+        return 0;
+    }
     int i = 0;//Count as the index of the array
     
     while( fgets (str, 300, fp)!=NULL ) {
@@ -55,6 +60,10 @@ Graph * File_read_edge(char * filename,Graph * G){
     
     char str[300];
     FILE * fp = fopen(filename, "r");
+    if (fp == NULL) {
+        printf("Sorry, no file existed for reading edge!\n");
+        return 0;
+    }
     //int i = 0;
     while( fgets (str, 300, fp)!=NULL ) {
         if (strstr(str, "link")) {
@@ -116,24 +125,44 @@ void Gnu_lines(char * filename,Graph * G){
 
 void convert_to_dots(char * filename,Graph * G){
     
+    
     FILE * fp = fopen(filename, "w");
+//    for (int i = 0; i < G->vex; i++) {
+//        int j  = 0;
+//        Edge * edge = (Edge*)malloc(sizeof(Edge));
+//        if (G->VexArray[i].next != NULL) {
+//            fprintf(fp, "%lf %lf\n",G->VexArray[i].longitude,G->VexArray[i].latitude);
+//            edge = G->VexArray[i].next;
+//            while (edge) {
+//                //fprintf(fp, "%ld ",edge->pre_node);
+//                for (int i = 0; i < G->vex; i++) {
+//                    if (edge->pre_node == G->VexArray[i].node) {
+//                        //fprintf(fp, "%ld  ",edge->pre_node);
+//                        fprintf(fp, "%lf %lf\n",G->VexArray[i].longitude,G->VexArray[i].latitude);
+//                    }
+//                }
+//                if (j % 2 == 0) {
+//                    fprintf(fp, "\n");
+//                }
+//                j++;
+//                edge = edge->next;
+//            }
+//            fprintf(fp, "\n");
+//        }
+//    }
+    
     for (int i = 0; i < G->vex; i++) {
         Edge * edge = (Edge*)malloc(sizeof(Edge));
-        //fprintf(fp, "%ld  ",G->VexArray[i].node);
-        if (G->VexArray[i].next != NULL) {
-            fprintf(fp, "%lf %lf\n",G->VexArray[i].longitude,G->VexArray[i].latitude);
-        }
         edge = G->VexArray[i].next;
         while (edge) {
-            //fprintf(fp, "%ld ",edge->pre_node);
+            fprintf(fp, "%lf %lf\n",G->VexArray[i].longitude,G->VexArray[i].latitude);
             for (int i = 0; i < G->vex; i++) {
                 if (edge->pre_node == G->VexArray[i].node) {
-                    //fprintf(fp, "%ld  ",edge->pre_node);
                     fprintf(fp, "%lf %lf\n",G->VexArray[i].longitude,G->VexArray[i].latitude);
                 }
             }
             edge = edge->next;
+            fprintf(fp, "\n");
         }
-        fprintf(fp, "\n");
     }
 }

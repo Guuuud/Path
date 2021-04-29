@@ -39,8 +39,9 @@ typedef struct Graph{
 
 double get_length(Graph * G, int start, int end);
 
-void shortest_path(Graph * G, int start, int end, int pre[], double dis[]);
+void shortest_path(Graph * G, int start, int end, int pre[], double dis[], char * filename);
 
 
 
 #endif /* __ADJ_LIST_H__*/
+

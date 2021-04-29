@@ -38,15 +38,16 @@ double get_length(Graph * G, int start, int end){
     
     return INF;
 }
+ 
 
-
-void shortest_path(Graph * G, int start, int end, int pre[], double dis[]){
+void shortest_path(Graph * G, int start, int end, int pre[], double dis[],char * filename){
     
     int already[G->vex];
     double min;
     double temp;
     int id = 0;
     
+    FILE * fp = fopen(filename, "w");
     int m = 0;//use to determine the shorteset path, 和k一样
     int i,j;
     //find the id of the Vexarray
@@ -56,7 +57,6 @@ void shortest_path(Graph * G, int start, int end, int pre[], double dis[]){
         pre[i] = 0;
         dis[i] = get_length(G, start, i);
     }
-    
     already[id] = 1;
     dis[id] = 0;
     
@@ -69,14 +69,10 @@ void shortest_path(Graph * G, int start, int end, int pre[], double dis[]){
                 
                 min = dis[j];
                 m = j;
-                
             }
-            
         }
+        
         already[m] = 1;
-        
-        
-        
         for (j = 0; j < G->vex; j++) {
             
             temp = get_length(G, m, j);
@@ -87,10 +83,33 @@ void shortest_path(Graph * G, int start, int end, int pre[], double dis[]){
             }
         }
     }
+    int rep = end;
+    int u = 0;
     
+//    while (u == 0) {
+//        printf("%ld\n",G->VexArray[rep].node);
+//        rep = pre[rep];
+//        if (rep == 0) {
+//            u = 10;
+//        }
+//    }
+//    printf("%ld\n",G->VexArray[start].node);
+//
+//    printf("The shortest dis is %lf",dis[end]);
+    fprintf(fp, "%lf %lf\n",G->VexArray[start].longitude,G->VexArray[start].latitude);
+    fprintf(fp, "%lf %lf\n",G->VexArray[rep].longitude,G->VexArray[rep].latitude);
+    fprintf(fp, "\n");
+    while (u == 0) {
+        printf("%ld\n",G->VexArray[rep].node);
+        fprintf(fp, "%lf %lf\n",G->VexArray[rep].longitude,G->VexArray[rep].latitude);
+        rep = pre[rep];
+        fprintf(fp, "%lf %lf\n",G->VexArray[rep].longitude,G->VexArray[rep].latitude);
+        fprintf(fp, "\n");
+        if (rep == 0) {
+            u = 10;
+        }
+    }
     printf("The shortest dis is %lf",dis[end]);
-    
-    
     
     
 }
