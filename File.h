@@ -26,3 +26,7 @@ Edge * create_head(long node,int length,Vex * vex);
 
 void Gnu_lines(char * filename,Graph * G);
 void convert_to_dots(char * filename,Graph * G);
+
+
+void test();
+void test_file(Graph * G, char * filename);

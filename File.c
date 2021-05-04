@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include "Adj_List.h"
 #include "interaction.h"
+#include "unity.h"
 //Variables Used for edges
 int id;
 long pre_node,next_node;
@@ -111,6 +112,7 @@ Graph * File_read_edge(char * filename,Graph * G){
 void Gnu_lines(char * filename,Graph * G){
     
     FILE * fp = fopen(filename, "w");
+    TEST_ASSERT_NOT_NULL_MESSAGE(fp, "The file cannot be detected");
     for (int i = 0; i < G->vex; i++) {
         Edge * edge = (Edge*)malloc(sizeof(Edge));
         fprintf(fp, "%ld ",G->VexArray[i].node);
@@ -121,10 +123,10 @@ void Gnu_lines(char * filename,Graph * G){
         }
         fprintf(fp, "\n");
     }
+    
 }
 
 void convert_to_dots(char * filename,Graph * G){
-    
     
     FILE * fp = fopen(filename, "w");
 //    for (int i = 0; i < G->vex; i++) {
@@ -165,4 +167,18 @@ void convert_to_dots(char * filename,Graph * G){
             fprintf(fp, "\n");
         }
     }
+}
+
+
+void test_(){
+    int a = 10;
+    TEST_ASSERT_INT32_WITHIN_MESSAGE(1, 10, a,"hello");
+}
+
+void test_file(Graph * G, char * filename){
+    
+    FILE * fp = fopen(filename, "r");
+    //TEST_ASSERT_NOT_NULL_MESSAGE(G, "Returnfaliedlafiled")
+    //TEST_ASSERT_INT32_WITHIN_MESSAGE(1, 10, 30,"hello");
+    TEST_ASSERT_NOT_NULL_MESSAGE(fp, "The file cannot be opened");
 }
