@@ -28,5 +28,9 @@ void Gnu_lines(char * filename,Graph * G);
 void convert_to_dots(char * filename,Graph * G);
 
 
+
+//test
+void Gnu_lines_test(Graph * G,char * filename);
 void test();
-void test_file(Graph * G, char * filename);
+void test_file_exist(Graph * G, char * filename);
+void file_write_test(Graph * G, char * filename);

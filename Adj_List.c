@@ -7,6 +7,8 @@
 
 #include "Adj_List.h"
 #include <stdio.h>
+#include "unity.h"
+//initialized the length to compare
 #define INF 200000
 
 
@@ -19,7 +21,7 @@ double get_length(Graph * G, int start, int end){
     }
     long real_end = 0;
     
-    
+    //if they are connected, then return the length
     for (int i = 0; i < G->vex; i++) {
         if (G->VexArray[i].idt == end) {
             real_end = G->VexArray[i].node;
@@ -28,6 +30,7 @@ double get_length(Graph * G, int start, int end){
     }
     
     e = G->VexArray[start].next;
+    //if they are connected, then return the length
     while (e) {
         if (e->pre_node == real_end) {
             return e->length;
@@ -52,6 +55,7 @@ void shortest_path(Graph * G, int start, int end, int pre[], double dis[],char *
     int i,j;
     //find the id of the Vexarray
     
+    //let the length to be initialised
     for (i = 0; i < G->vex; i++) {
         already[i] = 0;
         pre[i] = 0;
@@ -71,8 +75,8 @@ void shortest_path(Graph * G, int start, int end, int pre[], double dis[],char *
                 m = j;
             }
         }
-        
         already[m] = 1;
+        //let the node as the start node for now
         for (j = 0; j < G->vex; j++) {
             
             temp = get_length(G, m, j);
@@ -86,16 +90,7 @@ void shortest_path(Graph * G, int start, int end, int pre[], double dis[],char *
     int rep = end;
     int u = 0;
     
-//    while (u == 0) {
-//        printf("%ld\n",G->VexArray[rep].node);
-//        rep = pre[rep];
-//        if (rep == 0) {
-//            u = 10;
-//        }
-//    }
-//    printf("%ld\n",G->VexArray[start].node);
-//
-//    printf("The shortest dis is %lf",dis[end]);
+    //write the data into the file
     fprintf(fp, "%lf %lf\n",G->VexArray[start].longitude,G->VexArray[start].latitude);
     fprintf(fp, "%lf %lf\n",G->VexArray[rep].longitude,G->VexArray[rep].latitude);
     fprintf(fp, "\n");
@@ -115,3 +110,11 @@ void shortest_path(Graph * G, int start, int end, int pre[], double dis[],char *
 }
 
 //if connected return normal, else return infinity
+void get_length_test(Graph * G, char * filename){
+    //printf("HHHHH");
+    TEST_ASSERT_NOT_NULL_MESSAGE(G, "Empty Graph, can't not detect the pointer");
+}
+
+void shortest_path_test(Graph * G, char * filename){
+    TEST_ASSERT_NOT_NULL_MESSAGE(G, "Empty Graph, can't not detect the pointer");
+}

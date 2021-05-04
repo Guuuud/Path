@@ -42,6 +42,9 @@ double get_length(Graph * G, int start, int end);
 void shortest_path(Graph * G, int start, int end, int pre[], double dis[], char * filename);
 
 
+//test
+void get_length_test(Graph * G, char * filename);
+void shortest_path_test(Graph * G, char * filename);
 
 #endif /* __ADJ_LIST_H__*/
 

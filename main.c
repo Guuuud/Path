@@ -58,13 +58,6 @@ int main(){
         
     //}
         
-        G = NULL;
-        UnityBegin("/Users/lee/Documents/Program for Xcode/path_test/path_test");
-        //UnityDefaultTestRun(test1, test1, 6);
-        UnityDefaultTestRun(test_file, "test_file", 6,G,"/Users/lee/Desktop/lines.txt");
-        UnityDefaultTestRun(Gnu_lines, "test_file", 6,G,"/Users/lee/Desktop/lines.txt");
-        return UnityEnd();
-        
-
+        return 0;
     }
 }

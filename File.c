@@ -31,6 +31,7 @@ Graph * File_read_vex(char * filename,Graph * G){
     
     char str[300];
     FILE * fp = fopen(filename, "r");
+    //if file == NULL, exit the function
     if (fp == NULL) {
         printf("Sorry, no file existed for reading vex!\n");
         //enterr = 10;
@@ -38,6 +39,7 @@ Graph * File_read_vex(char * filename,Graph * G){
     }
     int i = 0;//Count as the index of the array
     
+    //read the data into the graph
     while( fgets (str, 300, fp)!=NULL ) {
         if (strstr(str, "lat")) {
             sscanf(str, "%*[^=]=%ld %*[^=]=%lf %*[^=]=%lf",&Vex_id,&lat,&lon);//3个要读入的
@@ -53,10 +55,13 @@ Graph * File_read_vex(char * filename,Graph * G){
         }
     }
     
+    //read the length into the node
     G = File_read_edge(filename, G);
     return G;
 }
 
+
+//also the data into the edge
 Graph * File_read_edge(char * filename,Graph * G){
     
     char str[300];
@@ -68,6 +73,7 @@ Graph * File_read_edge(char * filename,Graph * G){
     //int i = 0;
     while( fgets (str, 300, fp)!=NULL ) {
         if (strstr(str, "link")) {
+            //正则表达式
             sscanf(str, "%*[^=]=%d %*[^=]=%ld %*[^=]=%ld %*[^=]=%d %*[^=]=%lf",&id,&pre_node,&next_node,&way,&length);//5个要读入的
         
             
@@ -80,6 +86,7 @@ Graph * File_read_edge(char * filename,Graph * G){
             edge -> next = NULL;
             edge->length = length;
             
+            //use a for loop read the graph
             for (int i = 0; i < G ->vex; i++) {
                 if (G->VexArray[i].node == pre_node) {
                     edge -> next = G->VexArray[i].next;
@@ -126,44 +133,25 @@ void Gnu_lines(char * filename,Graph * G){
     
 }
 
+//input the data to the file for gnu
 void convert_to_dots(char * filename,Graph * G){
     
-    FILE * fp = fopen(filename, "w");
-//    for (int i = 0; i < G->vex; i++) {
-//        int j  = 0;
-//        Edge * edge = (Edge*)malloc(sizeof(Edge));
-//        if (G->VexArray[i].next != NULL) {
-//            fprintf(fp, "%lf %lf\n",G->VexArray[i].longitude,G->VexArray[i].latitude);
-//            edge = G->VexArray[i].next;
-//            while (edge) {
-//                //fprintf(fp, "%ld ",edge->pre_node);
-//                for (int i = 0; i < G->vex; i++) {
-//                    if (edge->pre_node == G->VexArray[i].node) {
-//                        //fprintf(fp, "%ld  ",edge->pre_node);
-//                        fprintf(fp, "%lf %lf\n",G->VexArray[i].longitude,G->VexArray[i].latitude);
-//                    }
-//                }
-//                if (j % 2 == 0) {
-//                    fprintf(fp, "\n");
-//                }
-//                j++;
-//                edge = edge->next;
-//            }
-//            fprintf(fp, "\n");
-//        }
-//    }
     
+    FILE * fp = fopen(filename, "w");
     for (int i = 0; i < G->vex; i++) {
         Edge * edge = (Edge*)malloc(sizeof(Edge));
         edge = G->VexArray[i].next;
         while (edge) {
+            //read the headnode
             fprintf(fp, "%lf %lf\n",G->VexArray[i].longitude,G->VexArray[i].latitude);
             for (int i = 0; i < G->vex; i++) {
                 if (edge->pre_node == G->VexArray[i].node) {
+                    //read the son node
                     fprintf(fp, "%lf %lf\n",G->VexArray[i].longitude,G->VexArray[i].latitude);
                 }
             }
             edge = edge->next;
+            //write a \n
             fprintf(fp, "\n");
         }
     }
@@ -175,10 +163,19 @@ void test_(){
     TEST_ASSERT_INT32_WITHIN_MESSAGE(1, 10, a,"hello");
 }
 
-void test_file(Graph * G, char * filename){
+void test_file_exist(Graph * G, char * filename){
     
     FILE * fp = fopen(filename, "r");
-    //TEST_ASSERT_NOT_NULL_MESSAGE(G, "Returnfaliedlafiled")
-    //TEST_ASSERT_INT32_WITHIN_MESSAGE(1, 10, 30,"hello");
     TEST_ASSERT_NOT_NULL_MESSAGE(fp, "The file cannot be opened");
+}
+
+void Gnu_lines_test(Graph * G,char * filename){
+    
+    FILE * fp = fopen(filename, "r");
+    TEST_ASSERT_NOT_NULL_MESSAGE(fp, "The file cannot be opened");
+}
+
+void file_write_test(Graph * G, char * filename){
+    FILE * fp = fopen(filename, "r");
+    TEST_ASSERT_NOT_NULL_MESSAGE(fp, "The file cannot be writed correctly");
 }
