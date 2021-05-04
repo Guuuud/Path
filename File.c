@@ -26,7 +26,7 @@ long Vex_id;
 extern int enterr;
 
 
-
+//
 Graph * File_read_vex(char * filename,Graph * G){
     
     char str[300];

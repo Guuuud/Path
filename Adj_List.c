@@ -11,7 +11,7 @@
 //initialized the length to compare
 #define INF 200000
 
-
+//
 //For this function we use idt instead of node
 double get_length(Graph * G, int start, int end){
     

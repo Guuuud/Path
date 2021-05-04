@@ -14,3 +14,4 @@
 //long first,second;
 
 void ask(long first,long second);
+//

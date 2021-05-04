@@ -14,3 +14,4 @@ void ask(long i,long j){
     printf("Enter the first node:\n");
     scanf("%ld",&j);
 }
+//
